@@ -1,3 +1,7 @@
+#Author: Devin Robinson 2022000425
+#Pledge of honor: This is my work, always 100% owned because that's me. 
+#Purpose: This code is designed to bring up a small interface for a easy accessable database user-interface to show a table and the records.
+    
 import pyodbc
 
 print("What do you want to do? (A, B, C OR D)")
