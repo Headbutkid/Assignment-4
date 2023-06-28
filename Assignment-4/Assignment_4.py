@@ -30,13 +30,40 @@ def print_all_records():
        print(record)
 
 def print_positive_growth():
-    pass
+    conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\2022000425\Downloads\Company-202200425.accdb;')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * from Company_Data WHERE Revenue_Growth >0")
+
+    print(f'{"Company":<20}{"Revenue Growth":<20}')
+    print(f'{ "_"*30:<75}')
+
+    for row in cursor.fetchall():
+       record = f'{row.Company_Name:<20}{row.Revenue_growth:<20}'
+
+       print(record)
 
 def record_by_date():
-    pass
+    
+   conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\2022000425\Downloads\Company-202200425.accdb;')
+   cursor = conn.cursor()
+   choice = input("Enter company date (dd mm yy): ")
+   cursor.execute("SELECT * from Company_Data WHERE Company_found_date = ?", (choice,))
+   row = cursor.fetchall()
+   while row: 
+        print(row)
+        row = cursor.fetchall()
+
 
 def count_companies_between_dates():
-    pass
+  conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\2022000425\Downloads\Company-202200425.accdb;')
+  cursor = conn.cursor()
+  start_date = input("Enter your starting date for the company (dd mm yy): ")
+  end_date = input("Enter your end date for the company (dd mm yy): ")
+  cursor.execute("SELECT * from Company_Data WHERE Company_found_date BETWEEN ? AND ?", (start_date, end_date))
+  rows = cursor.fetchall()
+  count = len(rows)
+    
+  print(f"The number of entries between {start_date} and {end_date} is: {count}")
 
 if (choice == 'A'):
 
@@ -49,6 +76,7 @@ elif (choice == 'B'):
 elif (choice == 'C'):
 
     record_by_date()
+    
 
 else: count_companies_between_dates()
 
